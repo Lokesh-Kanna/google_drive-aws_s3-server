@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
+import cors from "cors";
 
 const app = express();
 
