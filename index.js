@@ -11,6 +11,8 @@ dotenv.config();
 
 app.use(express.json());
 
+app.use(cors());
+
 const MONGO_URL = process.env.MONGO_URL;
 
 const server_memory = multer({ dest: "server_memory/" });
