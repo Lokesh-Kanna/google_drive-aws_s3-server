@@ -32,7 +32,6 @@ app.get("/files/:fileName", async (req, res) => {
     .collection("data")
     .findOne({ fileName: fileName });
   res.send(getData);
-  console.log(req.params.fileName);
 });
 
 app.get("/files", async (req, res) => {
