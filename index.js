@@ -1,13 +1,15 @@
 import express from "express";
 import multer from "multer";
 import { MongoClient } from "mongodb";
+import dotenv from "dotenv";
 
 const app = express();
 
 const PORT = process.env.PORT || 9000;
 
-const MONGO_URL =
-  "mongodb+srv://LokeshKanna:book123@cluster0.60x6w.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+dotenv.config();
+
+const MONGO_URL = process.env.MONGO_URL;
 
 const server_memory = multer({ dest: "server_memory/" });
 
