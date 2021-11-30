@@ -9,6 +9,8 @@ const PORT = process.env.PORT || 9000;
 
 dotenv.config();
 
+app.use(express.json());
+
 const MONGO_URL = process.env.MONGO_URL;
 
 const server_memory = multer({ dest: "server_memory/" });
@@ -23,11 +25,17 @@ createConnection();
 
 const client = await createConnection();
 
-app.get("/files/:fileName", (req, res) => {
-  // res.send("Hello World!");
+app.get("/files/:fileName", async (req, res) => {
+  const { fileName } = req.params;
+  const getData = await client
+    .db("L-Drive")
+    .collection("data")
+    .findOne({ fileName: fileName });
+  res.send(getData);
+  console.log(req.params.fileName);
 });
 
-app.get("/posts", async (req, res) => {
+app.get("/files", async (req, res) => {
   const storedData = req.file;
   const getData = await client
     .db("L-Drive")
@@ -35,10 +43,9 @@ app.get("/posts", async (req, res) => {
     .find(storedData)
     .toArray();
   res.send(getData);
-  console.log(getData);
 });
 
-app.post("/posts", server_memory.single("file"), async (req, res) => {
+app.post("/files", server_memory.single("file"), async (req, res) => {
   const { filename, path } = req.file;
   const info = { fileName: filename, path: `/files/${filename}` };
   const postData = await client
