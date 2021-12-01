@@ -83,10 +83,12 @@ app.post("/users/signup", async (req, res) => {
 
   if (isUserExist) {
     res.send({ message: "User name already exists" });
+    return;
   }
 
   if (password.length < 8) {
     res.send({ message: "Please provide a longer password" });
+    return;
   }
 
   if (
@@ -103,9 +105,7 @@ app.post("/users/signup", async (req, res) => {
     password: hashedPassword,
   });
 
-  const getData = await getUser(email);
-
-  res.send(getData);
+  res.send(result);
 });
 
 app.listen(PORT, () => console.log("The server has started in port", PORT));
